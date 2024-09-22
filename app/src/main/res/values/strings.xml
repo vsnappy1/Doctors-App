@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DoctorsApp</string>
+    <string name="location_stream_message">This demonstrate how we can start a foreground service which gets data from LocationManager (system service) and then bound to this service to observe location updates from.</string>
+    <string name="fun_ground_message">This demonstrate how to get stream of data from system service (i.e. SensorManager).</string>
+    <string name="file_download_message">This demonstrate how we can download a file using system service (i.e. DownloadManager).</string>
+    <string name="contact_message">This demonstrate how we can get data from content provider (Contacts).</string>
+</resources>
