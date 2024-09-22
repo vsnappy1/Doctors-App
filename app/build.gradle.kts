@@ -86,6 +86,7 @@ dependencies {
     testImplementation(libs.mockwebserver)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.androidx.core.testing)
+    testImplementation (libs.robolectric)
 
     kapt(libs.hilt.android.compiler)
 }

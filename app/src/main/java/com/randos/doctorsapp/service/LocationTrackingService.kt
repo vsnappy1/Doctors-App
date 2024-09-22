@@ -35,7 +35,7 @@ class LocationTrackingService : Service() {
 
     companion object {
         private const val NOTIFICATION_ID = 50
-        const val NOTIFICATION_CHANNEL_ID = "location_tacking_notification"
+        private const val NOTIFICATION_CHANNEL_ID = "location_tacking_notification"
         private const val NOTIFICATION_CHANNEL_NAME = "Location Tacking Notification"
     }
 
@@ -93,7 +93,7 @@ class LocationTrackingService : Service() {
         }
     }
 
-    fun stopLocationTracking() {
+    private fun stopLocationTracking() {
         if (_isLocationTrackingActive.value) {
             Log.i(TAG, "stopLocationTracking: ")
             _isLocationTrackingActive.value = false
