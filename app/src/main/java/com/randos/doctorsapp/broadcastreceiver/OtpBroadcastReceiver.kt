@@ -5,12 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
 import android.util.Log
-
+import javax.inject.Inject
 
 private const val TAG = "OtpBroadcastReceiver"
 
-class OtpBroadcastReceiver() : BroadcastReceiver() {
+class OtpBroadcastReceiver @Inject constructor() : BroadcastReceiver() {
     private var onOtpReceived: (String?) -> Unit = {}
+
     companion object {
         const val SMS_RECEIVED_INTENT_FILTER = "android.provider.Telephony.SMS_RECEIVED"
     }
@@ -27,7 +28,7 @@ class OtpBroadcastReceiver() : BroadcastReceiver() {
         }
     }
 
-    fun setOnOtpReceivedListener(onOtpReceived: (String?) -> Unit){
+    fun setOnOtpReceivedListener(onOtpReceived: (String?) -> Unit) {
         this.onOtpReceived = onOtpReceived
     }
 }

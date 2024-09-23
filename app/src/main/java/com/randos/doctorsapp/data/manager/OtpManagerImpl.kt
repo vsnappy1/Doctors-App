@@ -14,7 +14,8 @@ import kotlin.coroutines.resume
 
 class OtpManagerImpl @Inject constructor(
     private val application: Application,
-    private val permissionManager: PermissionManager
+    private val permissionManager: PermissionManager,
+    private val broadcastReceiver: OtpBroadcastReceiver
 ) : OtpManager {
 
     companion object {
@@ -23,9 +24,8 @@ class OtpManagerImpl @Inject constructor(
 
     override suspend fun getOtp(): String? = suspendCancellableCoroutine { continuation ->
         if (permissionManager.isReceiveSmsPermissionGranted()) {
-            var broadcastReceiver: OtpBroadcastReceiver? = null
 
-            broadcastReceiver = OtpBroadcastReceiver().apply {
+            broadcastReceiver.apply {
                 val onOtpReceived: (String?) -> Unit = {
                     continuation.resume(it)
                     unregisterReceiver(broadcastReceiver)
