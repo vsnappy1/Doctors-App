@@ -2,12 +2,12 @@ package com.randos.doctorsapp.data.manager
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Looper
 import android.util.Log
+import com.randos.doctorsapp.utils.SdkVersionProvider
 import com.randos.domain.store.UserStore
 import com.randos.domain.type.Location
 import com.randos.domain.manager.PermissionManager
@@ -23,17 +23,18 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 
 class LocationManagerImpl @Inject constructor(
-    private val context: Application,
+    private val application: Application,
     private val userStore: UserStore,
-    private val permissionManager: PermissionManager
+    private val permissionManager: PermissionManager,
+    private val locationManager: LocationManager,
+    private val sdkVersionProvider: SdkVersionProvider,
+    private val looper: Looper
 ) : com.randos.domain.manager.LocationManager {
 
     companion object {
         private const val TAG = "LocationManagerImpl"
     }
 
-    private val locationManager =
-        context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     private var locationUpdateListener: LocationListener? = null
 
     override suspend fun getLocation(): Location? = suspendCancellableCoroutine { continuation ->
@@ -110,18 +111,18 @@ class LocationManagerImpl @Inject constructor(
         return userStore.getUser()?.let { Location.Address(it.address) }
     }
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission", "NewApi")
     @Suppress("Deprecation")
     private suspend fun getCurrentLocation(locationManager: LocationManager) =
         suspendCancellableCoroutine<Location?>
         { continuation ->
             val provider = getBestProvider(locationManager)
             if (provider != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                if (sdkVersionProvider.get() >= Build.VERSION_CODES.R) {
                     locationManager.getCurrentLocation(
                         provider,
                         null,
-                        context.mainExecutor
+                        application.mainExecutor
                     ) { location ->
                         Log.i(TAG, "Current Location: $location ($provider).")
                         continuation.resumeSafely(
@@ -146,7 +147,7 @@ class LocationManagerImpl @Inject constructor(
                     locationManager.requestSingleUpdate(
                         provider,
                         locationListener,
-                        Looper.getMainLooper()
+                        looper
                     )
                 }
             } else {
