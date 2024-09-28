@@ -7,10 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.randos.domain.repository.FileDownloadRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "FileDownloadViewModel"
+
 @HiltViewModel
 class FileDownloadViewModel @Inject constructor(
     private val repository: FileDownloadRepository
@@ -32,13 +34,21 @@ class FileDownloadViewModel @Inject constructor(
                 fileName = "Test File",
                 extension = "pdf",
                 onDownloadSuccess = {
-                    _uiState.postValue(
-                        _uiState.value?.copy(
-                            isDownloadStarted = false,
-                            downloadedFilePath = it
+                    viewModelScope.launch {
+                        /*
+                         Add some delay before triggering the onDownloadSuccess callback, because rapid
+                         emission usually cause problems specially when state changes (i.e downloading to
+                         downloaded).
+                         */
+                        delay(100)
+                        _uiState.postValue(
+                            _uiState.value?.copy(
+                                isDownloadStarted = false,
+                                downloadedFilePath = it
+                            )
                         )
-                    )
-                    Log.d(TAG, "onDownloadSuccess")
+                        Log.d(TAG, "onDownloadSuccess")
+                    }
                 },
                 onDownloadFailed = {
                     _uiState.postValue(

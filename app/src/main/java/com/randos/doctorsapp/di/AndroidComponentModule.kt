@@ -1,6 +1,7 @@
 package com.randos.doctorsapp.di
 
 import android.app.Application
+import android.app.DownloadManager
 import android.content.Context
 import android.location.LocationManager
 import android.os.Looper
@@ -16,6 +17,11 @@ object AndroidComponentModule {
     @Provides
     fun provideLocationManager(application: Application): LocationManager {
         return application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    }
+
+    @Provides
+    fun provideDownloadManager(application: Application): DownloadManager {
+        return application.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     }
 
     @Provides

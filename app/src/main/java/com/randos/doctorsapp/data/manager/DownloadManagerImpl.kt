@@ -1,8 +1,6 @@
 package com.randos.doctorsapp.data.manager
 
-import android.app.Application
 import android.app.DownloadManager
-import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.os.Environment
@@ -23,13 +21,11 @@ import javax.inject.Inject
 private const val TAG = "DownloadManagerImpl"
 
 class DownloadManagerImpl @Inject constructor(
-    application: Application,
-    @Dispatcher.Io dispatcher: CoroutineDispatcher
+    private val downloadManager: DownloadManager,
+    @Dispatcher.Io private val dispatcher: CoroutineDispatcher
 ) : com.randos.domain.manager.DownloadManager {
 
     private val scope = CoroutineScope(dispatcher)
-    private val downloadManager =
-        application.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
     //https://files.testfile.org/PDF/10MB-TESTFILE.ORG.pdf
     override fun download(
@@ -110,12 +106,6 @@ class DownloadManagerImpl @Inject constructor(
             DownloadManager.STATUS_SUCCESSFUL -> {
                 emit(100)
                 val path = cursor.getFilePath()
-                /*
-                 Add some delay before triggering the onDownloadSuccess callback, because rapid
-                 emission usually cause problems specially when state changes (i.e downloading to
-                 downloaded).
-                 */
-                delay(100)
                 onDownloadSuccess(path)
                 Log.i(TAG, "File downloaded from $url, and stored at $path")
             }
@@ -140,7 +130,6 @@ class DownloadManagerImpl @Inject constructor(
             }
         }
     }
-
 
     private fun getDownloadManagerCursor(result: Long): Cursor {
         val query = DownloadManager.Query().setFilterById(result)
