@@ -1,7 +1,5 @@
 package com.randos.doctorsapp.data.manager
 
-import android.app.Application
-import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -16,10 +14,9 @@ import javax.inject.Inject
 
 private const val TAG = "AccelerometerManagerImp"
 
-class AccelerometerManagerImpl @Inject constructor(application: Application) :
-    AccelerometerManager {
-    private var sensorManager: SensorManager =
-        application.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+class AccelerometerManagerImpl @Inject constructor(
+    private val sensorManager: SensorManager
+) : AccelerometerManager {
     private lateinit var sensorEventListener: SensorEventListener
 
     override fun accelerometerDataStream(): Flow<Accelerometer> = callbackFlow {

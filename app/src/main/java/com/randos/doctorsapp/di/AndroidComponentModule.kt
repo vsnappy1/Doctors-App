@@ -3,6 +3,7 @@ package com.randos.doctorsapp.di
 import android.app.Application
 import android.app.DownloadManager
 import android.content.Context
+import android.hardware.SensorManager
 import android.location.LocationManager
 import android.os.Looper
 import dagger.Module
@@ -22,6 +23,11 @@ object AndroidComponentModule {
     @Provides
     fun provideDownloadManager(application: Application): DownloadManager {
         return application.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+    }
+
+    @Provides
+    fun provideSensorManager(application: Application): SensorManager {
+        return application.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
 
     @Provides
