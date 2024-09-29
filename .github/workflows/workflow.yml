@@ -10,10 +10,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets up permissions for the workflow
-permissions:
-  contents: read
-
 # The jobs to run as part of this workflow
 jobs:
   build:
@@ -38,17 +34,9 @@ jobs:
           distribution: 'zulu' # You can use 'adopt' or 'zulu' or 'temurin' based on preference
           java-version: 17
 
-      # Step 3: Cache Gradle dependencies
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2.0.10
+        
       # Step 4: Run the Gradle build
       - name: Build with Gradle
         run: ./gradlew build
@@ -68,6 +56,27 @@ jobs:
           name: lint-report
           path: app/build/reports/lint-results.html
 
+
+      # Step 7.1: Cache Gradle dependencies
+      - name: Decode Keystore
+        env:
+          ENCODED_STRING: ${{ secrets.RELEASE_KEY_STORE_BASE_64 }}
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+          RELEASE_KEYSTORE_ALIAS: ${{ secrets.RELEASE_KEYSTORE_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }} 
+
+        run: |
+          echo $ENCODED_STRING > keystore-b64.txt
+          base64 -d keystore-b64.txt > keystore.jks
+
+
+      - name: Build Release apk
+        env:
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+          RELEASE_KEYSTORE_ALIAS: ${{ secrets.RELEASE_KEYSTORE_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: ./gradlew assembleRelease --stacktrace
+        
       # Step 8: Upload build artifacts (APK or AAB files)
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
