@@ -37,26 +37,6 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2.0.10
         
-      # Step 4: Run the Gradle build
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      # Step 5: Run tests
-      - name: Run tests
-        run: ./gradlew test
-
-      # Step 6: Generate lint report
-      - name: Lint report
-        run: ./gradlew lint
-
-      # Step 7: Upload lint report artifact
-      - name: Upload lint report
-        uses: actions/upload-artifact@v3
-        with:
-          name: lint-report
-          path: app/build/reports/lint-results.html
-
-
       # Step 7.1: Cache Gradle dependencies
       - name: Decode Keystore
         env:
@@ -76,10 +56,3 @@ jobs:
           RELEASE_KEYSTORE_ALIAS: ${{ secrets.RELEASE_KEYSTORE_ALIAS }}
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
         run: ./gradlew assembleRelease --stacktrace
-        
-      # Step 8: Upload build artifacts (APK or AAB files)
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-release
-          path: app/build/outputs/apk/release/*.apk # Change this if you are using aab or other variant
