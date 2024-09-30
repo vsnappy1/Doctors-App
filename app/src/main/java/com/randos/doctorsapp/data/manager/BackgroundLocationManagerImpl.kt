@@ -7,12 +7,13 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.util.Log
+import com.randos.doctorsapp.di.Dispatcher
 import com.randos.doctorsapp.service.LocationTrackingService
 import com.randos.domain.manager.BackgroundLocationManager
 import com.randos.domain.manager.PermissionManager
 import com.randos.domain.type.Location
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,13 +26,14 @@ private const val TAG = "BackgroundLocationManager"
 
 class BackgroundLocationManagerImpl @Inject constructor(
     private val application: Application,
-    private val permissionManager: PermissionManager
+    private val permissionManager: PermissionManager,
+    @Dispatcher.Io private val dispatcher: CoroutineDispatcher
 ) : BackgroundLocationManager {
 
     private val locationTrackingServiceIntent =
         Intent(application, LocationTrackingService::class.java)
     private var serviceConnection: ServiceConnection? = null
-    private val scope = CoroutineScope(Dispatchers.IO)
+    private val scope = CoroutineScope(dispatcher)
 
     override suspend fun startLocationService() {
         Log.i(TAG, "startLocationService: ")
