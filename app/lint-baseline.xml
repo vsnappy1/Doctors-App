@@ -135,7 +135,7 @@
 
     <issue
         id="GradleDependency"
-        message="A newer version of androidx.compose:compose-bom than 2024.08.00 is available: 2024.09.02"
+        message="A newer version of androidx.compose:compose-bom than 2024.08.00 is available: 2024.09.03"
         errorLine1="composeBom = &quot;2024.08.00&quot;"
         errorLine2="             ~~~~~~~~~~~~">
         <location
@@ -146,7 +146,7 @@
 
     <issue
         id="GradleDependency"
-        message="A newer version of androidx.compose:compose-bom than 2024.08.00 is available: 2024.09.02"
+        message="A newer version of androidx.compose:compose-bom than 2024.08.00 is available: 2024.09.03"
         errorLine1="composeBom = &quot;2024.08.00&quot;"
         errorLine2="             ~~~~~~~~~~~~">
         <location
@@ -157,7 +157,7 @@
 
     <issue
         id="GradleDependency"
-        message="A newer version of androidx.compose:compose-bom than 2024.08.00 is available: 2024.09.02"
+        message="A newer version of androidx.compose:compose-bom than 2024.08.00 is available: 2024.09.03"
         errorLine1="composeBom = &quot;2024.08.00&quot;"
         errorLine2="             ~~~~~~~~~~~~">
         <location
@@ -234,7 +234,7 @@
 
     <issue
         id="GradleDependency"
-        message="A newer version of androidx.compose.runtime:runtime-livedata than 1.6.8 is available: 1.7.2"
+        message="A newer version of androidx.compose.runtime:runtime-livedata than 1.6.8 is available: 1.7.3"
         errorLine1="runtimeLivedata = &quot;1.6.8&quot;"
         errorLine2="                  ~~~~~~~">
         <location
@@ -245,7 +245,7 @@
 
     <issue
         id="GradleDependency"
-        message="A newer version of androidx.compose.runtime:runtime-livedata than 1.6.8 is available: 1.7.2"
+        message="A newer version of androidx.compose.runtime:runtime-livedata than 1.6.8 is available: 1.7.3"
         errorLine1="runtimeLivedata = &quot;1.6.8&quot;"
         errorLine2="                  ~~~~~~~">
         <location
@@ -256,7 +256,7 @@
 
     <issue
         id="GradleDependency"
-        message="A newer version of androidx.compose.runtime:runtime-livedata than 1.6.8 is available: 1.7.2"
+        message="A newer version of androidx.compose.runtime:runtime-livedata than 1.6.8 is available: 1.7.3"
         errorLine1="runtimeLivedata = &quot;1.6.8&quot;"
         errorLine2="                  ~~~~~~~">
         <location
