@@ -38,17 +38,23 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2.0.10
 
-      - name: Lint report
+      - name: Lint Check
         run: ./gradlew lint
 
-      - name: Upload lint report
+      - name: Upload Lint Report
         uses: actions/upload-artifact@v3
         with:
           name: lint-report
           path: app/build/reports/lint-results-debug.html
 
-      - name: Run tests
-        run: ./gradlew test
+      - name: Run Unit Tests and Verify Code Coverage
+        run: ./gradlew jacocoTestCoverageVerification
+
+      - name: Upload Test Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: lint-report
+          path: app/build/reports/jacoco/jacocoTestReport/html/index.html
         
       - name: Decode Keystore
         env:
@@ -61,7 +67,7 @@ jobs:
           echo $ENCODED_STRING > keystore-b64.txt
           base64 -d keystore-b64.txt > keystore.jks
 
-      - name: Build Release apk
+      - name: Build Release APK
         env:
           RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
           RELEASE_KEYSTORE_ALIAS: ${{ secrets.RELEASE_KEYSTORE_ALIAS }}
