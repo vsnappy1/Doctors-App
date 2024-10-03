@@ -4,4 +4,8 @@
     <issue id="all">
         <ignore path="../gradle/libs.versions.toml" />
     </issue>
+
+    <issue id="all">
+        <ignore path="/build.gradle.kts" />
+    </issue>
 </lint>
