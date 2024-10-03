@@ -26,18 +26,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.randos.doctorsapp.R
 import com.randos.domain.model.Accelerometer
 
-data class FunGroundState(
+data class FunGroundScreenState(
     val accelerometer: Accelerometer? = null
 )
 
 @Composable
-fun FunGround(
+fun FunGroundScreen(
     onMoveToFileDownload: () -> Unit,
     viewModel: FunGroundViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.observeAsState(FunGroundState())
+    val uiState by viewModel.uiState.observeAsState(FunGroundScreenState())
 
-    FunGround(
+    FunGroundScreen(
         state = uiState,
         onMoveToFileDownload = onMoveToFileDownload
     )
@@ -54,8 +54,8 @@ fun FunGround(
 }
 
 @Composable
-private fun FunGround(
-    state: FunGroundState,
+private fun FunGroundScreen(
+    state: FunGroundScreenState,
     onMoveToFileDownload: () -> Unit
 ) {
     val accelerometer = state.accelerometer
@@ -111,5 +111,5 @@ private fun FunGround(
 @Preview
 @Composable
 private fun PreviewFunGround() {
-    FunGround(FunGroundState(), {})
+    FunGroundScreen(FunGroundScreenState(), {})
 }

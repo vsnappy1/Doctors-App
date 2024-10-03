@@ -14,8 +14,8 @@ class FunGroundViewModel @Inject constructor(
     private val repository: FunGroundRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableLiveData(FunGroundState())
-    val uiState: LiveData<FunGroundState> = _uiState
+    private val _uiState = MutableLiveData(FunGroundScreenState())
+    val uiState: LiveData<FunGroundScreenState> = _uiState
 
 
     fun startObservingAccelerometer() {

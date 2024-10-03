@@ -22,19 +22,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.randos.doctorsapp.R
 import com.randos.doctorsapp.presentation.component.NetworkActionButton
 
-data class FileDownloadState(
+data class FileDownloadScreenState(
     val downloadedFilePath: String? = null,
     val percentageDownloaded: Int = 0,
     val isDownloadStarted: Boolean = false
 )
 
 @Composable
-fun FileDownload(
+fun FileDownloadScreen(
     onMoveToLocationStream: () -> Unit,
     viewModel: FileDownloadViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.observeAsState(FileDownloadState())
-    FileDownload(
+    val uiState by viewModel.uiState.observeAsState(FileDownloadScreenState())
+    FileDownloadScreen(
         state = uiState,
         onMoveToLocationStream = onMoveToLocationStream,
         onDownloadStart = viewModel::download
@@ -42,8 +42,8 @@ fun FileDownload(
 }
 
 @Composable
-private fun FileDownload(
-    state: FileDownloadState,
+private fun FileDownloadScreen(
+    state: FileDownloadScreenState,
     onMoveToLocationStream: () -> Unit,
     onDownloadStart: () -> Unit
 ) {
@@ -83,8 +83,6 @@ private fun FileDownload(
             }
         }
 
-
-
         Button(
             modifier = Modifier.align(Alignment.BottomCenter),
             onClick = onMoveToLocationStream
@@ -97,5 +95,5 @@ private fun FileDownload(
 @Preview
 @Composable
 private fun PreviewFileDownload() {
-    FileDownload(FileDownloadState(), {}, {})
+    FileDownloadScreen(FileDownloadScreenState(), {}, {})
 }

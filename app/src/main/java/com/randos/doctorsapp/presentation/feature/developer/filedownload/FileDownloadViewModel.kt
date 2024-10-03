@@ -18,8 +18,8 @@ class FileDownloadViewModel @Inject constructor(
     private val repository: FileDownloadRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableLiveData(FileDownloadState())
-    val uiState: LiveData<FileDownloadState> = _uiState
+    private val _uiState = MutableLiveData(FileDownloadScreenState())
+    val uiState: LiveData<FileDownloadScreenState> = _uiState
 
     fun download() {
         _uiState.postValue(

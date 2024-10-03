@@ -3,7 +3,10 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     alias(libs.plugins.dagger.hilt)
+    jacoco
 }
+
+apply(from = "../gradle/common/jacoco.gradle.kts")
 
 android {
     namespace = "com.randos.doctorsapp"

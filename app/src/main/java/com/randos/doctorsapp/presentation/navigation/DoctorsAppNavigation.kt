@@ -6,8 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.randos.doctorsapp.presentation.feature.appointment.AppointmentScreen
 import com.randos.doctorsapp.presentation.feature.developer.contact.ContactScreen
-import com.randos.doctorsapp.presentation.feature.developer.filedownload.FileDownload
-import com.randos.doctorsapp.presentation.feature.developer.funground.FunGround
+import com.randos.doctorsapp.presentation.feature.developer.filedownload.FileDownloadScreen
+import com.randos.doctorsapp.presentation.feature.developer.funground.FunGroundScreen
 import com.randos.doctorsapp.presentation.feature.developer.locationstream.LocationStreamScreen
 import com.randos.doctorsapp.presentation.feature.doctorlist.DoctorListScreen
 import com.randos.doctorsapp.presentation.feature.home.HomeScreen
@@ -63,11 +63,11 @@ fun DoctorsAppNavGraph() {
         }
 
         composable("fun_ground") {
-            FunGround(onMoveToFileDownload = { navController.navigate("file_download") })
+            FunGroundScreen(onMoveToFileDownload = { navController.navigate("file_download") })
         }
 
         composable("file_download") {
-            FileDownload(onMoveToLocationStream = { navController.navigate("location_stream") })
+            FileDownloadScreen(onMoveToLocationStream = { navController.navigate("location_stream") })
         }
 
         composable("location_stream") {
