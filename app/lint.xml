@@ -6,6 +6,6 @@
     </issue>
 
     <issue id="all">
-        <ignore path="/build.gradle.kts" />
+        <ignore path="build.gradle.kts" />
     </issue>
 </lint>
