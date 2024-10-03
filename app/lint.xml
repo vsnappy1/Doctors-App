@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!-- Ignore all lint issues for a file -->
+    <issue id="all">
+        <ignore path="../gradle/libs.versions.toml" />
+    </issue>
+</lint>
