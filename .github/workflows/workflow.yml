@@ -53,8 +53,8 @@ jobs:
       - name: Upload Test Coverage Report
         uses: actions/upload-artifact@v3
         with:
-          name: lint-report
-          path: app/build/reports/jacoco/jacocoTestReport/html/index.html
+          name: test-coverage
+          path: app/build/reports/jacoco/jacocoTestReport/html
         
       - name: Decode Keystore
         env:
